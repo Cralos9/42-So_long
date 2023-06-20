@@ -6,14 +6,15 @@
 #    By: cacarval <cacarval@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/30 11:45:21 by cacarval          #+#    #+#              #
-#    Updated: 2023/06/14 12:13:47 by cacarval         ###   ########.fr        #
+#    Updated: 2023/06/20 11:08:15 by cacarval         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
 NAME = so_long
 
-SRC = srcs/main.c srcs/map.c srcs/utils.c srcs/moves.c srcs/sprites.c
+SRC = srcs/main.c srcs/make_map.c srcs/utils.c srcs/moves.c srcs/sprites.c \
+		srcs/check_map.c
 
 OBJ = ${SRC:.c=.o}
 
