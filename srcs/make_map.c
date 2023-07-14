@@ -6,7 +6,7 @@
 /*   By: cacarval <cacarval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 11:12:44 by cacarval          #+#    #+#             */
-/*   Updated: 2023/06/20 16:20:44 by cacarval         ###   ########.fr       */
+/*   Updated: 2023/06/21 14:59:07 by cacarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void	ft_get_map(t_game *game)
 		free(line);
 		i++;
 	}
-	game->columns = ft_strlen(game->map[0]);
 }
 
 void	make_map(t_game *game)
@@ -57,6 +56,11 @@ void	ft_initmap(t_game *game, char *mapname)
 	close(game->fd);
 	game->fd = open(mapname, O_RDONLY);
 	game->map = ft_calloc(game->rows + 1, sizeof(char *));
+	if (!game->map)
+	{
+		free(game->map);
+		exit_error(game, "Couldn't open map");
+	}
 	ft_get_map(game);
 	close(game->fd);
 }

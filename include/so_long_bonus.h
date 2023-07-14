@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long.h                                          :+:      :+:    :+:   */
+/*   so_long_bonus.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cacarval <cacarval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 11:13:32 by cacarval          #+#    #+#             */
-/*   Updated: 2023/07/04 14:51:52 by cacarval         ###   ########.fr       */
+/*   Updated: 2023/07/06 10:37:46 by cacarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SO_LONG_H
-# define SO_LONG_H
+#ifndef SO_LONG_BONUS_H
+# define SO_LONG_BONUS_H
 
 # include "../libft/libft.h"
 # include "../mlx/mlx.h"
@@ -22,21 +22,28 @@
 # define WALL "./assets/sprites/WALL.xpm"
 # define SPACES "./assets/sprites/SPACES.xpm"
 # define PLAYER "./assets/sprites/CharSprites/Player.xpm"
+# define WIN "./assets/sprites/CharSprites/Win.xpm"
+# define WIN1 "./assets/sprites/CharSprites/Win1.xpm"
 # define EXIT "./assets/sprites/Exit.xpm"
 # define COIN "./assets/sprites/coin.xpm"
-# define TILES "01CEP"
+# define COIN2 "./assets/sprites/coin2.xpm"
+# define ENEMY "./assets/sprites/EnemySprites/enemy.xpm"
+# define TILES "01CEPM"
 # define SIZE 45
-
 # define MLX_ERROR "ERROR : mlx failed."
 # define MLX_WIN_ERROR "ERROR : win failed."
-# define SPRITES 5
+# define SPRITES 9
 
 typedef enum e_index
 {
 	Wall,
 	Spaces,
 	Coin,
+	Coin2,
 	Exit,
+	Enemy,
+	Win,
+	Win1,
 	Player,
 }		t_id;
 
@@ -81,6 +88,11 @@ typedef struct s_game
 	int			count;
 	int			exit;
 	int			player;
+	int			key;
+	t_pos		e;
+	t_pos		next_e;
+	t_pos		*monster;
+	int			num_monsters;
 }	t_game;
 
 int		ft_cntrows(t_game *game);
@@ -99,6 +111,9 @@ void	make_map(t_game *game);
 int		flood_fill(char **map, t_pos curr, char **path, t_game *game);
 void	launch_window(t_game *game);
 int		quit_game(t_game *game);
+void	moves_counter(t_game *game);
+void	coin_animation(t_game *game);
 void	clean_game(t_game *game);
+void	monster_position(t_game *game);
 
 #endif

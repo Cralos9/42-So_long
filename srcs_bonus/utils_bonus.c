@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   utils_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cacarval <cacarval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 11:13:12 by cacarval          #+#    #+#             */
-/*   Updated: 2023/07/06 12:14:58 by cacarval         ###   ########.fr       */
+/*   Updated: 2023/07/04 14:32:17 by cacarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "so_long_bonus.h"
 
 int	ft_len(char const *str)
 {
@@ -35,7 +35,12 @@ int	check_assets(int y, int x, t_game *game)
 		}
 		else if (game->map[y][x] == 'E' && game->count == game->coins)
 		{
-			ft_printf("Great Job\n");
+			ft_printf("Great Job! :D\n");
+			check_key(ESC, game);
+		}
+		else if (game->map[y][x] == 'M')
+		{
+			ft_printf("You lost :(\n");
 			check_key(ESC, game);
 		}
 		return (1);
@@ -90,6 +95,8 @@ int	flood_fill(char **map, t_pos curr, char **path, t_game *game)
 		coins++;
 	else if (path[curr.y][curr.x] == 'E')
 		exit = 1;
+	else if (path[curr.y][curr.x] == 'M')
+		game->num_monsters++;
 	path[curr.y][curr.x] = '1';
 	flood_fill(map, (t_pos){curr.x + 1, curr.y}, path, game);
 	flood_fill(map, (t_pos){curr.x - 1, curr.y}, path, game);

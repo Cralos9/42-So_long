@@ -20,7 +20,7 @@ long	check_nbr(long nbr)
 }
 
 int	check_size(int n)
-{	
+{
 	if (n > 0)
 		n = 0;
 	else

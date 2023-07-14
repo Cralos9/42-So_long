@@ -1,68 +1,66 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map.c                                              :+:      :+:    :+:   */
+/*   make_map_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cacarval <cacarval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 11:12:44 by cacarval          #+#    #+#             */
-/*   Updated: 2023/06/14 15:41:42 by cacarval         ###   ########.fr       */
+/*   Updated: 2023/07/04 14:32:09 by cacarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "so_long_bonus.h"
 
 void	ft_get_map(t_game *game)
 {
 	int		i;
-	char	*str;
+	char	*line;
 
 	i = 0;
 	while (i < game->rows)
 	{
-		str = get_next_line(game->fd);
-		if (!str)
+		line = get_next_line(game->fd);
+		if (!line)
 		{
-			free(str);
+			free(line);
 			break ;
 		}
-		game->map[i] = ft_strtrim(str, "\n");
-		free(str);
+		game->map[i] = ft_strtrim(line, "\n");
+		free(line);
 		i++;
 	}
-	game->columns = ft_strlen(game->map[0]);
 }
 
-void	ft_initmap(t_game *game, char *mapname)
+void	make_map(t_game *game)
 {
 	int	x;
 	int	y;
 
+	y = -1;
+	while (++y < game->rows)
+	{
+		x = 0;
+		while (game->map[y][x] != '\n' && game->map[y][x] != '\0')
+		{
+			ft_put_sprites(game, y, x, game->map[y][x]);
+			x++;
+		}
+	}
+}
 
-	x = 0;
-	y = 0;
+void	ft_initmap(t_game *game, char *mapname)
+{
 	game->fd = open(mapname, O_RDONLY);
 	game->rows = ft_cntrows(game);
 	close(game->fd);
 	game->fd = open(mapname, O_RDONLY);
 	game->map = ft_calloc(game->rows + 1, sizeof(char *));
-	ft_get_map(game);
-	game->win = mlx_new_window(game->mlx, ft_len(game->map[0]) * SIZE, game->rows * SIZE, "so_long");
-	if (game->win == NULL)
+	if (!game->map)
 	{
-		free(game->win);
-		ft_printf("%s\n", MLX_WIN_ERROR);
-		return ;
+		free(game->map);
+		exit_error(game, "Couldn't open map");
 	}
-	while (x < game->rows)
-	{ 
-		y = 0;
-		while (game->map[x][y] != '\n' && game->map[x][y] != '\0')
-		{
-			ft_put_sprites(game, x, y, game->map[x][y]);
-			y++;
-		}
-		x++;
-	}
+	ft_get_map(game);
 	close(game->fd);
 }
