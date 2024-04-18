@@ -38,7 +38,7 @@ void	launch_game(char *file)
 {
 	t_game	game;
 
-	bzero(&game, sizeof(t_game));
+	ft_bzero(&game, sizeof(t_game));
 	ft_initmap(&game, file);
 	check_map(&game);
 	launch_window(&game);
